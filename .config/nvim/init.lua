@@ -54,11 +54,25 @@ vim.keymap.set('n', '<C-n>', ':NERDTreeFind<CR>')
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 vim.keymap.set('n', '<leader>cf', [[:let @* = expand("%:p")<CR>]], { noremap = true, silent = true })
 
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+function RipgrepFzf(query, fullscreen)
+    local command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+    local initial_command = string.format(command_fmt, vim.fn.shellescape(query))
+    local reload_command = string.format(command_fmt, '{q}')
+    local spec = {
+        options = { '--disabled', '--query', query, '--bind', 'change:reload:' .. reload_command }
+    }
+    local fzf_preview = vim.fn['fzf#vim#with_preview']
+    local fzf_grep = vim.fn['fzf#vim#grep']
+    fzf_grep(initial_command, 1, fzf_preview(spec, 'right', 'ctrl-/'), fullscreen)
+end
+
+vim.cmd([[command! -nargs=* -bang RG call v:lua.RipgrepFzf(<q-args>, <bang>0)]])
+
+vim.keymap.set('n', '<leader>ff', ':GFiles<CR>')
+vim.keymap.set('n', '<leader>fg', ':RG<CR>')
+vim.keymap.set('n', '<leader>fb', ':Buffers<CR>')
+vim.keymap.set('n', '<leader>fh', ':History<CR>')
 
 require('plugins')
 require('lsp_config_file')

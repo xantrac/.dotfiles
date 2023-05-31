@@ -17,14 +17,16 @@ alias src="exec zsh"
 alias x86="arch -x86_64"
 alias t="tmux"
 alias tt="tmux new -s tropic"
+alias tro="cd ~/src/tropic/"
 alias pm="cd ~/src/popmenu/"
 alias rspec="bundle exec rspec"
 
 alias g="git"
 alias gco="git checkout"
 
-export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+export HOMEBREW_PREFIX=/opt/homebrew
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"

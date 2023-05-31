@@ -28,10 +28,6 @@ require('packer').startup(function()
     use 'editorconfig/editorconfig-vim'
     use 'ryanoasis/vim-devicons'
     use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.1',
-        requires = { { 'nvim-lua/plenary.nvim' } }
-    }
-    use {
         'nvim-lualine/lualine.nvim',
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
@@ -46,7 +42,7 @@ require('packer').startup(function()
         config = function()
             require("copilot").setup({
                 filetypes = {
-                    markdown = true,
+                    ["*"] = true
                 },
                 server_opts_overrides = {
                     trace = "verbose",
@@ -66,6 +62,8 @@ require('packer').startup(function()
             })
         end,
     }
+    use { 'junegunn/fzf', run = ":call fzf#install()" }
+    use { 'junegunn/fzf.vim' }
     use {
         "zbirenbaum/copilot-cmp",
         after = { "copilot.lua" },
@@ -73,4 +71,11 @@ require('packer').startup(function()
             require("copilot_cmp").setup()
         end
     }
+    use({
+        "jose-elias-alvarez/null-ls.nvim",
+        config = function()
+            require("null-ls").setup()
+        end,
+        requires = { "nvim-lua/plenary.nvim" },
+    })
 end)
