@@ -27,6 +27,7 @@ require('packer').startup(function()
     use 'tpope/vim-commentary'
     use 'editorconfig/editorconfig-vim'
     use 'ryanoasis/vim-devicons'
+    use 'tpope/vim-rails'
     use {
         'nvim-lualine/lualine.nvim',
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }

@@ -74,6 +74,13 @@ vim.keymap.set('n', '<leader>fg', ':RG<CR>')
 vim.keymap.set('n', '<leader>fb', ':Buffers<CR>')
 vim.keymap.set('n', '<leader>fh', ':History<CR>')
 
+if vim.fn.has("nvim") == 1 then
+    vim.cmd([[au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>]])
+    vim.cmd([[
+    au FileType fzf lua vim.api.nvim_buf_set_keymap(0, 't', '<Esc>', '<C-c>', {noremap = true, silent = true})
+  ]])
+end
+
 require('plugins')
 require('lsp_config_file')
 require('cmp_config')
